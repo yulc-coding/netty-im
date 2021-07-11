@@ -62,6 +62,7 @@ public class NettyServer {
                     .localAddress(port)
                     // accept队列大小
                     .option(ChannelOption.SO_BACKLOG, 1024)
+                    // 保持长连接，开启心跳机制
                     .childOption(ChannelOption.SO_KEEPALIVE, true)
                     .childOption(ChannelOption.TCP_NODELAY, true)
                     .childHandler(nettyServerHandlerInitializer);

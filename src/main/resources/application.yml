@@ -1,1 +1,5 @@
+server:
+  port: 8080
 
+netty:
+  port: 8090
