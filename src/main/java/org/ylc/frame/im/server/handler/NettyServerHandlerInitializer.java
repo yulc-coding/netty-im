@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 代码全万行，注释第一行
+ * 代码千万行，注释第一行
  * 注释不规范，同事泪两行
  * <p>
  * 每一个客户端与服务端建立完成连接时，服务端会创建一个 Channel 与之对应

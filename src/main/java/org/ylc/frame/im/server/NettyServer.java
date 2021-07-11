@@ -17,7 +17,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 /**
- * 代码全万行，注释第一行
+ * 代码千万行，注释第一行
  * 注释不规范，同事泪两行
  * <p>
  * 服务类

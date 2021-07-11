@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.ylc.frame.im.server.NettyChannelManager;
 
 /**
- * 代码全万行，注释第一行
+ * 代码千万行，注释第一行
  * 注释不规范，同事泪两行
  * <p>
  * Channel连接、断开、异常处理
