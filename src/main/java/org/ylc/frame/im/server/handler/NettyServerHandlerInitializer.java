@@ -6,6 +6,7 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.ylc.frame.im.server.dispatcher.MessageDispatcher;
 
 import java.util.concurrent.TimeUnit;
 
@@ -24,15 +25,36 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class NettyServerHandlerInitializer extends ChannelInitializer<Channel> {
 
+    /**
+     * 心跳超时时间（秒）
+     */
+    private static final Long READ_TIMEOUT_SECONDS = 60 * 3L;
 
-    private static final Long READ_TIMEOUT_SECOND = 60 * 3L;
+    private final MessageDispatcher messageDispatcher;
+
+    private final NettyServerHandler nettyServerHandler;
+
+    public NettyServerHandlerInitializer(MessageDispatcher messageDispatcher, NettyServerHandler nettyServerHandler) {
+        this.messageDispatcher = messageDispatcher;
+        this.nettyServerHandler = nettyServerHandler;
+    }
+
 
     @Override
-    protected void initChannel(Channel ch) throws Exception {
-        // 获取 pipeline
+    protected void initChannel(Channel ch) {
+        log.info("new channel :{}", ch.id());
         ChannelPipeline channelPipeline = ch.pipeline();
-        // 添加相关的 Handler，心跳检查、编码器、解码器、消息分发器、服务端处理器 TODO
-        channelPipeline.addLast(new ReadTimeoutHandler(READ_TIMEOUT_SECOND, TimeUnit.SECONDS));
-
+        // 添加 ChannelHandler 到 ChannelPipeline中
+        channelPipeline
+                // 空闲检测
+                .addLast(new ReadTimeoutHandler(READ_TIMEOUT_SECONDS, TimeUnit.SECONDS))
+                //因为基于http协议，使用http的编码和解码器
+                //.addLast(new HttpServerCodec())
+                //是以块方式写，添加ChunkedWriteHandler处理器
+                //.addLast(new ChunkedWriteHandler())
+                //.addLast(new HttpObjectAggregator(8192))
+                //.addLast(new WebSocketServerProtocolHandler("/im"))
+                .addLast(messageDispatcher)
+                .addLast(nettyServerHandler);
     }
 }
