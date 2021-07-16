@@ -1,6 +1,7 @@
-package org.ylc.frame.im.server.dispatcher;
+package org.ylc.frame.im.server.messagehandler;
 
 import io.netty.channel.Channel;
+import org.ylc.frame.im.server.message.Message;
 
 /**
  * 代码千万行，注释第一行

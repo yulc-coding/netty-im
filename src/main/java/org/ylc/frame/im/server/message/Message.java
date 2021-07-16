@@ -1,4 +1,4 @@
-package org.ylc.frame.im.server.dispatcher;
+package org.ylc.frame.im.server.message;
 
 /**
  * 代码千万行，注释第一行

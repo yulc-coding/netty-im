@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 public class NettyServerHandlerInitializer extends ChannelInitializer<Channel> {
 
     /**
-     * 心跳超时时间（秒）
+     * 读超时时间（秒）
      */
     private static final Long READ_TIMEOUT_SECONDS = 60 * 3L;
 
@@ -46,8 +46,9 @@ public class NettyServerHandlerInitializer extends ChannelInitializer<Channel> {
         ChannelPipeline channelPipeline = ch.pipeline();
         // 添加 ChannelHandler 到 ChannelPipeline中
         channelPipeline
-                // 空闲检测
+                // 服务端指定时间未从客户端读取到消息，主动断开连接
                 .addLast(new ReadTimeoutHandler(READ_TIMEOUT_SECONDS, TimeUnit.SECONDS))
+                // todo 编码解码器
                 //因为基于http协议，使用http的编码和解码器
                 //.addLast(new HttpServerCodec())
                 //是以块方式写，添加ChunkedWriteHandler处理器
